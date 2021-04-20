@@ -1,0 +1,45 @@
+<mat-card>
+  <mat-card-content>
+    <form class="d-flex flex-column">
+      <div class="d-flex">
+        <h2>Time to play !</h2>
+
+        <button
+          mat-raised-button
+          color="primary"
+          class="ml-auto"
+          (click)="loadMoreQuizz()"
+        >
+          I want more quizz
+        </button>
+      </div>
+      <mat-form-field class="full-width-input">
+        <mat-label>Choose a quizz</mat-label>
+        <mat-select (selectionChange)="selectQuizz($event)">
+          <mat-option *ngFor="let q of quizz" [value]="q.id">{{
+            q.id
+          }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <div *ngIf="quizzSelected" class="d-flex flex-column">
+        <mat-form-field
+          class="full-width-input"
+          *ngFor="let question of quizzSelected.questions; let index = index"
+        >
+          <mat-label [innerHtml]="question.question"></mat-label>
+          <mat-select (selectionChange)="answerSelected(index, $event)">
+            <mat-option
+              *ngFor="let answer of question.answers"
+              [value]="answer"
+              [innerHtml]="answer"
+            ></mat-option>
+          </mat-select>
+        </mat-form-field>
+        <button mat-raised-button color="primary" (click)="postAnswer()">
+          Send
+        </button>
+      </div>
+    </form>
+  </mat-card-content>
+</mat-card>
